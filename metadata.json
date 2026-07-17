@@ -1,0 +1,6 @@
+{
+  "name": "AMONE HOS",
+  "description": "AMONE — Human Operating System. A digital companion designed to map your inner ecosystem: regulate the nervous system, explore emotions, track cycle rhythms, and connect with AI guidance.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

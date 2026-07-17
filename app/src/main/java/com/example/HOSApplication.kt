@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import android.util.Log
+import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import io.sentry.android.core.SentryAndroid
 
@@ -23,11 +24,23 @@ class HOSApplication : Application() {
         }
         
         Log.d("HOSApplication", "Sentry SDK initialized successfully.")
+
+        // 2. Safely initialize FirebaseApp manually if not already done automatically
+        try {
+            if (FirebaseApp.getApps(this).isEmpty()) {
+                FirebaseApp.initializeApp(this)
+                Log.d("HOSApplication", "Firebase initialized manually successfully.")
+            } else {
+                Log.d("HOSApplication", "Firebase already initialized automatically.")
+            }
+        } catch (e: Exception) {
+            Log.e("HOSApplication", "Manual Firebase initialization failed", e)
+        }
         
-        // 2. Create push notification channels for Android O+
+        // 3. Create push notification channels for Android O+
         createNotificationChannels()
         
-        // 3. Log FCM Token on startup
+        // 4. Log FCM Token on startup
         try {
             FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
                 if (!task.isSuccessful) {
